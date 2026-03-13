@@ -1643,6 +1643,7 @@ def calmar(
     returns: Returns,
     prepare_returns: bool = True,
     periods: int = 252,
+    compounded: bool = True,
 ) -> float:
     """
     Calculate the Calmar ratio (CAGR / Maximum Drawdown).
@@ -1655,6 +1656,9 @@ def calmar(
         returns (pd.Series): Return series to analyze
         prepare_returns (bool): Whether to prepare returns first (default: True)
         periods (int): Periods per year for annualization (default: 252)
+        compounded (bool): Whether to use compounded (geometric) returns
+            for the CAGR calculation (default: True). Set to False for
+            intraday or non-compounded return streams.
 
     Returns:
         float: Calmar ratio
@@ -1670,7 +1674,7 @@ def calmar(
         returns = _utils._prepare_returns(returns)
 
     # Calculate CAGR and maximum drawdown
-    cagr_ratio = cagr(returns, periods=periods)
+    cagr_ratio = cagr(returns, compounded=compounded, periods=periods)
     max_dd = max_drawdown(returns)
 
     # Return ratio of CAGR to absolute maximum drawdown

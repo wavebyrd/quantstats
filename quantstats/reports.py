@@ -1435,7 +1435,9 @@ def metrics(
                 metrics["Volatility (ann.) %"] = ret_vol
 
         # Additional risk and return metrics
-        metrics["Calmar"] = _get_stats().calmar(df, prepare_returns=False, periods=win_year)
+        metrics["Calmar"] = _get_stats().calmar(
+            df, prepare_returns=False, periods=win_year, compounded=compounded
+        )
         metrics["Skew"] = _get_stats().skew(df, prepare_returns=False)
         metrics["Kurtosis"] = _get_stats().kurtosis(df, prepare_returns=False)
 
